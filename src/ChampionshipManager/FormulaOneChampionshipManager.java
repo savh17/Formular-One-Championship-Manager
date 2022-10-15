@@ -37,7 +37,10 @@ public class FormulaOneChampionshipManager implements ChampionshipManager {
         );
 
         // create driver object
-        FormulaOneDriver driver = new FormulaOneDriver(driverID, driverName, team);
+        FormulaOneDriver.DriverBuilder driverBuilder = new FormulaOneDriver
+                .DriverBuilder(driverID, driverName, team);
+
+        FormulaOneDriver driver = new FormulaOneDriver(driverBuilder);
 
         // putting driver object into hashmap
         driversMap.put(driverID, driver);

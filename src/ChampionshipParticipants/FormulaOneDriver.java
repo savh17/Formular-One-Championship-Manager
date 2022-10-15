@@ -4,9 +4,9 @@ import java.util.*;
 
 public class FormulaOneDriver extends Driver implements Comparable<FormulaOneDriver> {
     private final static Map<Integer, Integer> positionsPoints = new HashMap<>();
-    private String driverID;
+    private final String driverID;
     private FormulaOneTeam team;
-    private int[] location = new int[2];
+    private int[] location;
     private int noFirstPositions;
     private int noSecondPositions;
     private int noThirdPositions;
@@ -25,29 +25,65 @@ public class FormulaOneDriver extends Driver implements Comparable<FormulaOneDri
         positionsPoints.put(9, 2);
     }
 
-    public FormulaOneDriver(String driverID, String name, FormulaOneTeam team) {
-        super(name);
-        this.driverID = driverID;
-        this.team = team;
-        this.noFirstPositions = 0;
-        this.noSecondPositions = 0;
-        this.noThirdPositions = 0;
-        this.raceIDs = new ArrayList<>();
-        this.points = 0;
-
+    public FormulaOneDriver(DriverBuilder builder) {
+        super(builder.name);
+        this.driverID = builder.driverID;
+        this.team = builder.team;
+        this.location = builder.location;
+        this.noFirstPositions = builder.noFirstPositions;
+        this.noSecondPositions = builder.noSecondPositions;
+        this.noThirdPositions = builder.noThirdPositions;
+        this.raceIDs = builder.raceIDs;
+        this.points = builder.points;
         team.setDriver(this);
     }
 
-    public FormulaOneDriver(String name, String driverID, FormulaOneTeam team, int[] location, int noFirstPositions, int noSecondPositions, int noThirdPositions, List<String> raceIDs, int points) {
-        super(name);
-        this.driverID = driverID;
-        this.team = team;
-        this.location = location;
-        this.noFirstPositions = noFirstPositions;
-        this.noSecondPositions = noSecondPositions;
-        this.noThirdPositions = noThirdPositions;
-        this.raceIDs = raceIDs;
-        this.points = points;
+    public static class DriverBuilder {
+        private final static Map<Integer, Integer> positionsPoints = new HashMap<>();
+        private final String driverID;
+        private final String name;
+        private final FormulaOneTeam team;
+        private int[] location = new int[2];
+        private int noFirstPositions;
+        private int noSecondPositions;
+        private int noThirdPositions;
+        private List<String> raceIDs;
+        private int points;
+        public DriverBuilder(String driverID, String name, FormulaOneTeam team) {
+            this.name = name;
+            this.driverID = driverID;
+            this.team = team;
+        }
+
+        public DriverBuilder setLocation(int[] location) {
+            this.location = location;
+            return this;
+        }
+
+        public DriverBuilder setNoFirstPositions(int noFirstPositions) {
+            this.noFirstPositions = noFirstPositions;
+            return this;
+        }
+
+        public DriverBuilder setNoSecondPositions(int noSecondPositions) {
+            this.noSecondPositions = noSecondPositions;
+            return this;
+        }
+
+        public DriverBuilder setNoThirdPositions(int noThirdPositions) {
+            this.noThirdPositions = noThirdPositions;
+            return this;
+        }
+
+        public DriverBuilder setRaceIDs(List<String> raceIDs) {
+            this.raceIDs = raceIDs;
+            return this;
+        }
+
+        public DriverBuilder setPoints(int points) {
+            this.points = points;
+            return this;
+        }
     }
 
     public void updateStatistics(int position, String raceID) {
